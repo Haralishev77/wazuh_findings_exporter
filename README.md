@@ -1,3 +1,5 @@
+# This repo is discontinued. For new updates, check out [https://github.com/Haralishev77/wazuh_findings_exporter](https://github.com/Haralishev77/wazuh_findings_exporter).
+
 # wazuh_findings_exporter
 
 A simple python script which exports findings of a client group from wazuh and adds the agent-ip as well as hostname to every finding for better further processing.
