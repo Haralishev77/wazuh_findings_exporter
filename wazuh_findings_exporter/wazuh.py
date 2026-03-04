@@ -15,13 +15,9 @@ from requests.exceptions import (
     ConnectionError,
     RequestException,
 )
-from typing import Optional, Dict, List, Any, Sequence, Union, Iterable
+from typing import Optional, Dict, List, Any, Sequence, Union
 from packaging import version
 from pathlib import Path
-
-log_format = (
-    "%(asctime)s - [%(module)s::%(funcName)s::%(lineno)d] - %(levelname)s - %(message)s"
-)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -34,7 +30,6 @@ logging.captureWarnings(True)
 class Wazuh_Importer(object):
     """API exporter for Wazuh."""
 
-    DEFAULT_HITS_PER_FILE = 100000
     VALID_OUTPUT_MODES = {"single", "split"}
 
     def __init__(
@@ -570,7 +565,8 @@ class Wazuh_Importer(object):
     def _clear_the_scroll_index(self, scroll_id: str) -> None:
         try:
             self.logger.info("Clearing scroll index")
-            self.opensearch_client.clear_scroll(scroll_id=scroll_id)
+            # TODO: Resolve error[unresolved-attribute]
+            self.opensearch_client.clear_scroll(scroll_id=scroll_id)  # type: ignore
         except AuthenticationException:
             self.logger.error("Received 401 Unauthorized.")
         except RequestError as re:
@@ -579,10 +575,6 @@ class Wazuh_Importer(object):
             self.logger.error(
                 f"Unexpected error while clearing scroll '{scroll_id}': {e}"
             )
-
-    def _chunked(self, items: Sequence[Any], chunk_size: int) -> Iterable[List[Any]]:
-        for i in range(0, len(items), chunk_size):
-            yield list(items[i : i + chunk_size])
 
     def _chunk_output_path(self, output_file: Path, part_index: int) -> Path:
         stem = output_file.stem
