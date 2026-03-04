@@ -1,4 +1,4 @@
-name: Lint, Format, Type and Unused code Check
+name: PR Lint, Types & Tests
 
 on: [ pull_request ]
 
@@ -64,7 +64,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.14"
+          python-version: "3.12"
       - name: Install Dependencies
         run: pip install deadcode
       - name: Run deadcode
