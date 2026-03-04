@@ -1,0 +1,9 @@
+[tool.ty.src]
+exclude = ["venv", "setup.py", "tests"]
+
+[tool.deadcode]
+exclude = [
+    "venv",
+    ".tox",
+    "tests"
+]

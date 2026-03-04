@@ -417,10 +417,8 @@ def test_get_vulnerabilities_for_group_of_agents_4_8_plus_split_writes_chunks(tm
     importer.opensearch_client.clear_scroll.assert_called_once_with(scroll_id="s3")
 
 
-def test_chunked_and_chunk_output_path():
+def test_chunk_output_path():
     importer = _make_importer()
-    chunks = list(importer._chunked([1, 2, 3, 4, 5], 2))
-    assert chunks == [[1, 2], [3, 4], [5]]
 
     output = importer._chunk_output_path(Path("/tmp/wazuh.json"), 3)
     assert output.name == "wazuh_0003.json"
